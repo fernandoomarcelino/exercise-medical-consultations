@@ -1,0 +1,28 @@
+<ng-container *ngIf="data.template === 'CONFIRM'">
+  <h1 class="modal-confirm-title"
+      mat-dialog-title
+      [innerHTML]="data.title ? data.title : 'Confirmação'">
+  </h1>
+  <div mat-dialog-content
+       [innerHTML]="data.message ? data.message : 'Tem certeza que deseja continuar?'">
+  </div>
+  <div mat-dialog-actions class="modal-confirm-button">
+    <button mat-button mat-dialog-close  (click)="onClick(false)" >Não</button>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="onClick(true)" >Sim</button>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="data.template === 'MESSAGE'">
+  <h1 class="modal-confirm-title"
+      mat-dialog-title
+      [innerHTML]="data.title ? data.title : 'Informação'">
+  </h1>
+
+  <div mat-dialog-content
+       [innerHTML]="data.message ? data.message : 'Tem certeza que deseja continuar?'">
+  </div>
+  <div mat-dialog-actions class="modal-confirm-button">
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="onClick(true)" >Fechar</button>
+  </div>
+</ng-container>
+
