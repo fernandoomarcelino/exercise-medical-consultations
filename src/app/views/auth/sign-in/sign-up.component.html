@@ -1,0 +1,75 @@
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+
+    <!-- Icon -->
+    <div class="fadeIn first m-2" style="text-align: left">
+      <img src="../../../../assets/img/brand/medicar.jpeg" id="icon" alt="User Icon"/>
+    </div>
+
+    <h5 class="p-2">Crie sua conta</h5>
+
+    <!-- Login Form -->
+    <form [formGroup]="resourceForm" (submit)="submitForm()">
+      <div class="row">
+        <div class="form-group">
+          <div class="input-group mb-3 px-2">
+            <input type="text" id="name"
+                   class="form-control" formControlName="name"
+                   name="login" placeholder="Nome">
+          </div>
+
+          <div class="input-group mb-3 px-2">
+            <input type="text" id="email"
+                   class="form-control" formControlName="email"
+                   name="login" placeholder="Email">
+          </div>
+
+          <div class="input-group mb-3 px-2">
+            <input [type]="showPassword ? 'text' : 'password'"
+                   id="password" formControlName="password"
+                   class="form-control" name="login" placeholder="Senha" autocomplete="new-password">
+            <div class="input-group-prepend">
+              <span class="input-group-text input-password-btn" id="basic-addon1" (click)="showPasswordFn()"><i
+                class="fa fa-eye" style="height: 24px"></i></span>
+            </div>
+          </div>
+
+          <div class="input-group mb-3 px-2">
+            <input [type]="showPassword ? 'text' : 'password'"
+                   id="confirm_password" formControlName="confirm_password"
+                   class="form-control" name="login" placeholder="confirmar Senha" autocomplete="new-password">
+            <div class="input-group-prepend">
+              <span class="input-group-text input-password-btn" id="basic-addon2" (click)="showPasswordFn()"><i
+                class="fa fa-eye" style="height: 24px"></i></span>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group" style="text-align: left">
+          <input type="checkbox" id="remind_password" class="m-2" [checked]="remindPassword"
+                 (click)="remindPasswordFn()">
+          <label for="remind_password">Lembrar minha senha</label>
+        </div>
+      </div>
+
+      <div class="row py-4">
+        <div class="col-6">
+          <button type="button" (click)="cancel()" class="btn btn-outline-primary btn-new-account">
+            <strong>Cancelar</strong>
+          </button>
+        </div>
+        <div class="col-6">
+          <button type="button" class="btn btn-primary default-btn-color btn-submit">
+            <strong>Confirmar</strong>
+          </button>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>
+

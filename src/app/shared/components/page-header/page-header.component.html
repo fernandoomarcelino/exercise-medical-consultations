@@ -1,0 +1,36 @@
+<div class="d-none d-lg-block">
+  <div class="row mb-4">
+    <div class="col-md-9">
+      <h1 class="h2 border-left pl-2">
+        {{pageTitle}}
+      </h1>
+    </div>
+    <div *ngIf="showButton" class="col-md-3 text-right">
+      <a *ngIf="isButtonClick" (click)="buttonClickFn()" class="btn" [ngClass]="buttonClass">
+        {{buttonText}}
+      </a>
+      <a *ngIf="!isButtonClick" [routerLink]="buttonLink" class="btn" [ngClass]="buttonClass">
+        {{buttonText}}
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="d-none d-block d-lg-none" >
+  <div class="row mb-4">
+    <div class="col-12 col-sm-12 col-md-8">
+      <h1 class="h2 border-left pl-2 title-mobile" >
+        {{pageTitle}}
+      </h1>
+    </div>
+    <div *ngIf="showButton" class="col-12 col-sm-12 col-md-4 text-right">
+      <a *ngIf="isButtonClick" (click)="buttonClickFn()" class="btn btn-mobile"
+         title="{{buttonText}}">
+        <i class="fa fa-plus fa-2x" style="color: white"></i>
+      </a>
+      <a *ngIf="!isButtonClick" [routerLink]="buttonLink" class="btn btn-mobile" title="{{buttonText}}">
+         <i class="fa fa-plus fa-2x" style="color: white"></i>
+      </a>
+    </div>
+  </div>
+</div>

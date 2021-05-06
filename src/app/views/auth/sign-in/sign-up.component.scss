@@ -1,0 +1,65 @@
+/* BASIC */
+
+.input-password-btn {
+  cursor: pointer;
+}
+
+.btn-submit {
+  width: 200px;
+}
+
+.btn-new-account {
+  color: #49B4BB !important;
+  padding: 0 !important;
+  border: none !important;
+  background: none !important;
+}
+
+/* STRUCTURE */
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+#formContent {
+  max-width: 450px;
+}
+
+/* ANIMATIONS */
+
+/* Simple CSS3 Fade-in-down Animation */
+.fadeInDown {
+  -webkit-animation-name: fadeInDown;
+  animation-name: fadeInDown;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+@-webkit-keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
