@@ -1,6 +1,6 @@
 <div class="row">
   <!--  DADOS DE CADASTRO-->
-  <div class="col1-2 col-lg-6">
+  <div class="col-12 ">
     <mat-card class="m-2 card-default">
       <mat-card-header>
         <mat-card-title> Cadastro de um consulta</mat-card-title>
@@ -80,9 +80,9 @@
         <mat-card-actions>
           <div class="row">
             <div class="col-12 col-md-12 col-sm-12 col-lg-12">
-              <a [routerLink]="'../'" class="btn btn-light"><i class="fa fa-arrow-left"></i> Voltar</a>
-              <button
-                mat-raised-button color="primary" type="submit" class=" bg-success"> Salvar
+              <a [routerLink]="'../'" class="btn btn-light first-color"> Cancelar</a>
+              <button [disabled]="!resourceForm.valid"
+                mat-raised-button color="primary" type="submit" class="first-btn-color"> Confirmar
               </button>
 
             </div>

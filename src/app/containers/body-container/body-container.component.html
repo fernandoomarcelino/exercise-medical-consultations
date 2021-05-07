@@ -1,0 +1,23 @@
+<div class="app-body background-image-login">
+  <main class="main d-flex align-items-center">
+    <div class="container">
+
+
+      <div class="row">
+        <div class="col-4" style="text-align: left">
+          <img src="../../../assets/img/brand/medicar.jpeg" id="icon" alt="User Icon"/>
+        </div>
+
+        <div class="col-8">
+
+          <span class="float-end first-color" (click)="this.authenticationService.logout()">Desconectar</span>
+          <span class="float-end mx-2 second-color">{{this.authenticationService.getCurrentUser('username')}}</span>
+
+        </div>
+      </div>
+
+      <router-outlet></router-outlet>
+
+    </div>
+  </main>
+</div>

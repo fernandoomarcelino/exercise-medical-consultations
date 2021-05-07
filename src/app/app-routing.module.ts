@@ -5,6 +5,7 @@ import {P404Component} from './views/error/404.component';
 import {P500Component} from './views/error/500.component';
 import {AuthContainerComponent} from './containers/auth-container/auth-container.component';
 import {NotAuthGuard} from './core/guards/not-auth.guard';
+import {BodyContainerComponent} from './containers/body-container/body-container.component';
 
 export const routes: Routes = [
   {
@@ -41,7 +42,7 @@ export const routes: Routes = [
   {
     path: 'consultas',
     canActivate: [AuthGuard],
-    // component: AuthContainerComponent,
+    component: BodyContainerComponent,
     loadChildren: () => import('./views/consult/consult.module').then(m => m.ConsultModule),
   },
 

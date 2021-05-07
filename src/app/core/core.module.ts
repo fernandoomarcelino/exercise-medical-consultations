@@ -18,9 +18,11 @@ import {AuthContainerComponent} from '../containers/auth-container/auth-containe
 import {ToastrModule} from 'ngx-toastr';
 import {NgxSpinnerModule} from 'ngx-spinner';
 import {LoadingService} from './services/loading.service';
+import {BodyContainerComponent} from '../containers/body-container/body-container.component';
 
 const APP_CONTAINERS = [
-  AuthContainerComponent
+  AuthContainerComponent,
+  BodyContainerComponent,
 ];
 
 registerLocaleData(br);

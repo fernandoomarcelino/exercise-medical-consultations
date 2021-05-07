@@ -1,10 +1,27 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+  height: 100%;
+}
 
-.default-btn-color {
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.first-btn-color {
   background-color: #49B4BB !important;
   border-color: #49B4BB !important;
 }
 
+.first-color {
+  color: #49B4BB !important;
+  text-decoration: none;
+}
+.second-color {
+  color: #A8A8A8 !important;
+}
+
+.first-color:hover {
+  text-decoration: underline;
+}
