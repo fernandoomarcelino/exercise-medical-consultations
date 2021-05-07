@@ -5,7 +5,7 @@
         {{pageTitle}}
       </h1>
     </div>
-    <div *ngIf="showButton" class="col-md-3 text-right">
+    <div *ngIf="showButton" class="col-md-3 text-end">
       <a *ngIf="isButtonClick" (click)="buttonClickFn()" class="btn" [ngClass]="buttonClass">
         {{buttonText}}
       </a>
@@ -23,7 +23,7 @@
         {{pageTitle}}
       </h1>
     </div>
-    <div *ngIf="showButton" class="col-12 col-sm-12 col-md-4 text-right">
+    <div *ngIf="showButton" class="col-12 col-sm-12 col-md-4 text-end">
       <a *ngIf="isButtonClick" (click)="buttonClickFn()" class="btn btn-mobile"
          title="{{buttonText}}">
         <i class="fa fa-plus fa-2x" style="color: white"></i>
