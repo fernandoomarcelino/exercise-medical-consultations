@@ -40,7 +40,8 @@ registerLocaleData(br);
       timeOut: 10000,
       positionClass: 'toast-top-right',
       preventDuplicates: true,
-      progressBar: true
+      progressBar: true,
+      enableHtml: true
     }),
     SharedModule,
     // IMaskModule,

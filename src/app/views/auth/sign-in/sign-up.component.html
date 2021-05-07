@@ -13,19 +13,29 @@
     <form [formGroup]="resourceForm" (submit)="submitForm()">
       <div class="row">
         <div class="form-group">
-          <div class="input-group mb-3 px-2">
+          <div class="form-group mb-3 px-2">
             <input type="text" id="name"
                    class="form-control" formControlName="name"
                    name="login" placeholder="Nome">
+            <app-form-field-error [form-control]="resourceForm.get('name')"></app-form-field-error>
           </div>
 
-          <div class="input-group mb-3 px-2">
+          <div class="form-group mb-3 px-2">
+            <input type="text" id="username"
+                   class="form-control" formControlName="username"
+                   name="login" placeholder="username">
+            <app-form-field-error [form-control]="resourceForm.get('username')"></app-form-field-error>
+          </div>
+
+          <div class="form-group mb-3 px-2">
             <input type="text" id="email"
                    class="form-control" formControlName="email"
                    name="login" placeholder="Email">
+            <app-form-field-error [form-control]="resourceForm.get('email')"></app-form-field-error>
           </div>
 
-          <div class="input-group mb-3 px-2">
+          <div class="form-group mb-3 px-2">
+            <div class="input-group mb-3 px-2">
             <input [type]="showPassword ? 'text' : 'password'"
                    id="password" formControlName="password"
                    class="form-control" name="login" placeholder="Senha" autocomplete="new-password">
@@ -34,15 +44,20 @@
                 class="fa fa-eye" style="height: 24px"></i></span>
             </div>
           </div>
+            <app-form-field-error [form-control]="resourceForm.get('password')"></app-form-field-error>
+          </div>
 
-          <div class="input-group mb-3 px-2">
+          <div class="form-group mb-3 px-2">
+            <div class="input-group mb-3 px-2">
             <input [type]="showPassword ? 'text' : 'password'"
-                   id="confirm_password" formControlName="confirm_password"
+                   id="password_confirmation" formControlName="password_confirmation"
                    class="form-control" name="login" placeholder="confirmar Senha" autocomplete="new-password">
             <div class="input-group-prepend">
               <span class="input-group-text input-password-btn" id="basic-addon2" (click)="showPasswordFn()"><i
                 class="fa fa-eye" style="height: 24px"></i></span>
             </div>
+          </div>
+            <app-form-field-error [form-control]="resourceForm.get('password_confirmation')"></app-form-field-error>
           </div>
 
 
@@ -63,12 +78,14 @@
           </button>
         </div>
         <div class="col-6">
-          <button type="button" class="btn btn-primary default-btn-color btn-submit">
+          <button type="submit" class="btn btn-primary default-btn-color btn-submit">
             <strong>Confirmar</strong>
           </button>
         </div>
       </div>
     </form>
+
+    <app-server-error-messages [serverErrorMessages]=""></app-server-error-messages>
 
   </div>
 </div>
