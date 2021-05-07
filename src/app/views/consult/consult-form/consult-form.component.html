@@ -1,0 +1,200 @@
+<div class="row">
+  <!--  DADOS DE CADASTRO-->
+  <div class="col1-2 col-lg-6">
+    <mat-card class="m-2 card-default">
+      <mat-card-header>
+        <mat-card-title> Cadastro de um consulta</mat-card-title>
+      </mat-card-header>
+
+      <form [formGroup]="resourceForm" (submit)="submitForm()">
+
+        <mat-card-content>
+
+
+          <!-- specialties-->
+          <div class="row">
+            <!-- Group -->
+            <mat-form-field appearance="standard" class="col-md">
+              <mat-label for="specialties">Especialidade</mat-label>
+              <mat-select id="specialties" formControlName="especialidade" (selectionChange)="filterDoctors()">
+                <mat-option *ngFor="let resource of specialties" [value]="resource">{{resource.nome}}</mat-option>
+              </mat-select>
+              <mat-error>
+                <app-form-field-error [form-control]="resourceForm.get('especialidade')"></app-form-field-error>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- doctor-->
+          <div class="row">
+            <!-- Group -->
+            <mat-form-field appearance="standard" class="col-md">
+              <mat-label for="doctor">Profissional</mat-label>
+              <mat-select
+                id="doctor" formControlName="medico" [disabled]="!resourceForm.value.especialidade"
+                (selectionChange)="loadSchedules()">
+                <mat-option *ngFor="let resource of filteredDoctors"
+                            [value]="resource">{{resource.nome}}</mat-option>
+              </mat-select>
+              <mat-error>
+                <app-form-field-error [form-control]="resourceForm.get('medico')"></app-form-field-error>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- date-->
+          <div class="row">
+            <!-- Group -->
+            <mat-form-field appearance="standard" class="col-md">
+              <mat-label for="agenda">Dia</mat-label>
+              <mat-select
+                id="agenda" formControlName="agenda" (selectionChange)="setAgendaId($event)"
+                [disabled]="!resourceForm.value.medico">
+                <mat-option *ngFor="let resource of schedules"
+                            [value]="resource">{{resource.dia | date:'dd/MM/yyyy'}}</mat-option>
+              </mat-select>
+              <mat-error>
+                <app-form-field-error [form-control]="resourceForm.get('agenda')"></app-form-field-error>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- hour-->
+          <div class="row">
+            <!-- Group -->
+            <mat-form-field appearance="standard" class="col-md">
+              <mat-label for="horario">Horário</mat-label>
+              <mat-select
+                id="horario" formControlName="horario" [disabled]="!resourceForm.value.agenda">
+                <mat-option *ngFor="let resource of resourceForm.value.agenda?.horarios"
+                            [value]="resource">{{resource}}</mat-option>
+              </mat-select>
+              <mat-error>
+                <app-form-field-error [form-control]="resourceForm.get('horario')"></app-form-field-error>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+        </mat-card-content>
+
+        <mat-card-actions>
+          <div class="row">
+            <div class="col-12 col-md-12 col-sm-12 col-lg-12">
+              <a [routerLink]="'../'" class="btn btn-light"><i class="fa fa-arrow-left"></i> Voltar</a>
+              <button
+                mat-raised-button color="primary" type="submit" class=" bg-success"> Salvar
+              </button>
+
+            </div>
+          </div>
+        </mat-card-actions>
+
+      </form>
+    </mat-card>
+  </div>
+
+  <!--  Courses-->
+  <div class="col-12 col-lg-6" *ngIf="resource.id">
+    <mat-card class="m-2 card-default">
+
+      <mat-card-header class="col-md">
+        <mat-card-title>Cursos</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <!--responsive screen >= lg-->
+        <div class="table-responsive  d-none d-lg-block">
+          <table class="table table-bordered table-striped table-sm">
+            <thead>
+            <tr>
+              <th>Nome do curso</th>
+              <th>Cidade</th>
+              <th>OBM</th>
+              <th>Data</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let resource of resource.course_students">
+              <td> {{resource.course?.name}} </td>
+              <td> {{resource.course?.city?.name}} </td>
+              <td> {{resource.course?.unit?.name}} </td>
+              <td> {{resource.course?.start_course | date:'dd/MM/yyyy'}} </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!--responsive screen < lg-->
+        <!--        | filter:searchObject.search-->
+        <ng-container *ngFor="let resource of resource.course_students ">
+
+          <div class="card d-block d-lg-none mobile-margin-cards-list">
+            <div class=" row-card card-head-course text-left">
+              <div class="col-2 back-cap-f">
+                <div class="back-cap">
+                  <i class="fa fa-graduation-cap card-icon"></i>
+                </div>
+              </div>
+              <div class="col-10 card-title-course-f">
+                <div class="card-title-course">
+                  <span> {{resource.course?.initials}} - {{resource.course?.name}}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-body text-course">
+
+              <p class="card-title">
+                <b>Cidade:</b>
+                <small>{{resource.course?.city?.name}}</small>
+              </p>
+
+              <p class="card-text">
+                <b>Inscrições:</b>
+                <small>{{resource.course?.start_registration|date:'dd/MM/yyyy'}}
+                  - {{resource.course?.end_registration|date:'dd/MM/yyyy'}}</small>
+              </p>
+
+              <p class="card-text">
+                <b>Data do curso:</b>
+                <small>{{resource.course?.start_registration|date:'dd/MM/yyyy'}}
+                  - {{resource.course?.end_registration|date:'dd/MM/yyyy'}}</small>
+              </p>
+
+              <p class="card-text">
+                <b>Quantidade de inscritos:</b>
+                <small>{{resource.course?.course_students?.length}}</small>
+              </p>
+
+              <p class="card-text">
+                <b>Descrição:</b>
+                <small>{{resource.course?.description}}</small>
+              </p>
+
+            </div>
+          </div>
+        </ng-container>
+
+      </mat-card-content>
+
+      <mat-card-actions>
+        <!--      Button-->
+        <div class="row">
+          <div class="col-md">
+            <button mat-raised-button color="primary" type="button" class="float-right" (click)="showCourses()"> Ver
+              Cursos Extras
+            </button>
+          </div>
+        </div>
+      </mat-card-actions>
+
+      <mat-card-footer></mat-card-footer>
+
+    </mat-card>
+  </div>
+
+</div>
+
+
+
+

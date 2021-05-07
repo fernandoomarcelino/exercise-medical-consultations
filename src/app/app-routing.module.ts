@@ -9,7 +9,7 @@ import {NotAuthGuard} from './core/guards/not-auth.guard';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'consultas',
     pathMatch: 'full',
   },
   {
@@ -39,10 +39,10 @@ export const routes: Routes = [
     loadChildren: () => import('./views/auth/auth.module').then(m => m.AuthModule),
   },
   {
-    path: 'dashboard',
+    path: 'consultas',
     canActivate: [AuthGuard],
     // component: AuthContainerComponent,
-    loadChildren: () => import('./views/dashboard/dashboard.module').then(m => m.DashboardModule),
+    loadChildren: () => import('./views/consult/consult.module').then(m => m.ConsultModule),
   },
 
   {path: '**', component: P404Component}

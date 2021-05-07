@@ -1,0 +1,34 @@
+<app-page-header
+  page-title="Consulta Clínica"
+  button-text="+ Nova Consulta"
+  button-link="new"
+  button-class="btn-success"
+></app-page-header>
+
+<!--responsive screen >= lg-->
+<div class="table-responsive d-none d-lg-block">
+  <table class="table table-bordered table-striped table-sm">
+    <thead>
+    <tr>
+      <th>id</th>
+      <th>Especialidade</th>
+      <th>Profissional</th>
+      <th>Data</th>
+      <th>Hora</th>
+      <th>Ação</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let resource of resources">
+      <td> {{resource.id}} </td>
+      <td> {{resource.especialidade?.nome}} </td>
+      <td> {{resource.medico?.nome}} </td>
+      <td> {{resource.dia | date:'dd/MM/yyyy'}} </td>
+      <td> {{resource.horario}} </td>
+      <td>
+        <button type="button" class="alert-primary" (click)="deleteResource(resource)"><i class="fa fa-remove"></i> Desmarcar</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
