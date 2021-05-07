@@ -18,49 +18,42 @@ export class UserService extends BaseResourceService<UserModel> {
   users: UserModel[];
 
   constructor(protected injector: Injector) {
-    super('geral/user', injector, UserModel.fromJson);
+    super('users/', injector, UserModel.fromJson);
   }
 
   login(resource: any): Observable<UserModel> {
-    this.loadingService.addRequestToLoading();
-    return this.http.post(`${environment.APIEndpoint}` + 'login', resource).pipe(
+    return this.http.post(`${environment.APIEndpoint}` + 'users/login', resource).pipe(
       map(this.jsonDataToResource.bind(this)),
       catchError(this.handleError),
       finalize(() => {
-        this.loadingService.removeRequestToLoading();
       }),
     );
   }
 
-  recoveryAccount(resource: any): Observable<any> {
-    this.loadingService.addRequestToLoading();
-    return this.http.post(`${environment.APIEndpoint}` + 'password/email', resource).pipe(
+  create(resource: UserModel): Observable<UserModel> {
+    return this.http.post(`${environment.APIEndpoint}` + this.apiPath, resource).pipe(
       map(this.jsonDataToResource.bind(this)),
       catchError(this.handleError),
       finalize(() => {
-        this.loadingService.removeRequestToLoading();
       }),
     );
   }
+
 
   changeForgotPassword(resource: any): Observable<UserModel> {
-    this.loadingService.addRequestToLoading();
     return this.http.post(`${environment.APIEndpoint}` + 'password/change', resource).pipe(
       map(this.jsonDataToResource.bind(this)),
       catchError(this.handleError),
       finalize(() => {
-        this.loadingService.removeRequestToLoading();
       }),
     );
   }
 
   loginSocial(resource: any): Observable<UserModel> {
-    this.loadingService.addRequestToLoading();
     return this.http.post(`${environment.APIEndpoint}` + 'login-social', resource).pipe(
       map(this.jsonDataToResource.bind(this)),
       catchError(this.handleError),
       finalize(() => {
-        this.loadingService.removeRequestToLoading();
       }),
     );
   }
@@ -76,14 +69,12 @@ export class UserService extends BaseResourceService<UserModel> {
 
   mySettings(): Observable<UserModel> {
     this.tokenUpdate();
-    this.loadingService.addRequestToLoading();
     const url = `${environment.APIEndpoint + this.apiPath + '/my-settings/'}`;
 
     return this.http.get(url, {headers: this.token}).pipe(
       map(this.jsonDataToResource.bind(this)),
       catchError(this.handleError),
       finalize(() => {
-        this.loadingService.removeRequestToLoading();
       }),
     );
   }
@@ -104,7 +95,6 @@ export class UserService extends BaseResourceService<UserModel> {
   // }
 
   registerUser(resource: any): Observable<UserModel> {
-    // this.loadingService.addRequestToLoading();
     console.log('resource', resource);
     return this.http.post(`${environment.APIEndpoint}` + 'new-account', resource).pipe(
       map(this.jsonDataToResource.bind(this)),

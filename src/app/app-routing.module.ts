@@ -7,16 +7,14 @@ import {AuthContainerComponent} from './containers/auth-container/auth-container
 import {NotAuthGuard} from './core/guards/not-auth.guard';
 
 export const routes: Routes = [
-  // {
-  //   path: '',
-  //   redirectTo: 'dashboard',
-  //   canActivate: [AuthGuard],
-  //   pathMatch: 'full',
-  // },
+  {
+    path: '',
+    redirectTo: 'dashboard',
+    pathMatch: 'full',
+  },
   {
     path: 'login',
     redirectTo: 'auth/login',
-    // canActivate: [NotAuthGuard],
     pathMatch: 'full',
   },
   {
@@ -39,6 +37,12 @@ export const routes: Routes = [
     canActivate: [NotAuthGuard],
     component: AuthContainerComponent,
     loadChildren: () => import('./views/auth/auth.module').then(m => m.AuthModule),
+  },
+  {
+    path: 'dashboard',
+    canActivate: [AuthGuard],
+    // component: AuthContainerComponent,
+    loadChildren: () => import('./views/dashboard/dashboard.module').then(m => m.DashboardModule),
   },
 
   {path: '**', component: P404Component}

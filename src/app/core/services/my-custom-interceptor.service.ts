@@ -1,20 +1,21 @@
 import {Injectable, Injector} from '@angular/core';
-import {
-  HttpInterceptor,
-  HttpRequest,
-  HttpHandler,
-  HttpEvent, HttpResponse, HttpErrorResponse, HttpClient
-} from '@angular/common/http';
-import {BehaviorSubject, Observable, throwError} from 'rxjs';
+import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse} from '@angular/common/http';
+import {Observable, throwError} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
 
-// import toastr from 'toastr';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService} from './authentication.service';
+import {ToastrService} from 'ngx-toastr';
+import {MatDialog} from '@angular/material/dialog';
+import {ModalConfirmComponent} from '../../shared/components/modal-confirm/modal-confirm.component';
+import {LoadingService} from './loading.service';
 
 @Injectable()
 export class MyCustomInterceptorService implements HttpInterceptor {
   public authenticationService: AuthenticationService;
+  public toastr: ToastrService;
+  public dialog: MatDialog;
+  protected loadingService: LoadingService;
 
   constructor(
     protected injector: Injector,
@@ -22,6 +23,9 @@ export class MyCustomInterceptorService implements HttpInterceptor {
     private route: ActivatedRoute,
   ) {
     this.authenticationService = this.injector.get(AuthenticationService);
+    this.loadingService = this.injector.get(LoadingService);
+    this.toastr = this.injector.get(ToastrService);
+    this.dialog = this.injector.get(MatDialog);
   }
 
   intercept(
@@ -31,62 +35,47 @@ export class MyCustomInterceptorService implements HttpInterceptor {
     const cloneReq = request.clone({
       // headers: request.headers.set('Authorization', 'Bearer token')
     });
+    this.loadingService.addRequestToLoading();
 
     // console.log('envio', cloneReq);
     return next.handle(cloneReq).pipe(
       tap((evento: HttpEvent<any>) => {
         if (evento instanceof HttpResponse) {
-          // console.log('respotas', evento);
+          this.loadingService.removeRequestToLoading();
         }
       }),
       catchError(error => {
-        // toastr.options = {
-        //   closeButton: false,
-        //   debug: false,
-        //   newestOnTop: true,
-        //   progressBar: true,
-        //   positionClass: 'toast-top-right',
-        //   preventDuplicates: true,
-        //   onclick: null,
-        //   showDuration: '300',
-        //   hideDuration: '1000',
-        //   timeOut: '50000',
-        //   extendedTimeOut: '1000',
-        //   showEasing: 'swing',
-        //   hideEasing: 'linear',
-        //   showMethod: 'fadeIn',
-        //   hideMethod: 'fadeOut'
-        // };
-
+        this.loadingService.removeRequestToLoading();
         if (error instanceof HttpErrorResponse) {
 
-          alert('error22');
-          // if (error.status === 303) {
-          //   this.dialog.open(ModalConfirmComponent, {width: '600px', data: {message: error.error?.message}});
-          // } else if (error.status === 0) {
-          //   toastr.error('Erro de conexão com o servidor');
-          // } else if (error.status === 401 && error.statusText === 'Unauthorized') {
-          //   toastr.error('Acesso não autorizado (token expirou?) problema a ser resolvido posteriormente. fazer login novamente.');
-          //   this.authenticationService.logout();
-          // } else if (error.status === 422) {
-          //   let msg = '';
-          //
-          //   Object.keys(error.error.errors).forEach((attributeWithError) => {
-          //     error.error.errors[attributeWithError].forEach(er => {
-          //       msg += '<li>' + er + '</li>';
-          //     });
-          //   });
-          //
-          //   msg = '<p>Dados incompletos!</p><ul>' + msg + '</ul>';
-          //   toastr.error(msg);
-          //
-          // } else if (error.error?.message) {
-          //   toastr.error('Erro: ' + error.error.message);
-          // } else if (error.error?.length > 0) {
-          //   toastr.error(error.error[0]);
-          // } else {
-          //   toastr.error('Erro desconhecido! Contate o administrador do sistema.');
-          // }
+          if (error.status === 303) {
+            this.dialog.open(ModalConfirmComponent, {width: '600px', data: {message: error.error?.message}});
+          } else if (error.status === 0) {
+            this.toastr.error('Erro de conexão com o servidor');
+          } else if (error.status === 401 && error.statusText === 'Unauthorized') {
+            this.toastr.error('Acesso não autorizado (token expirou?) problema a ser resolvido posteriormente. fazer login novamente.');
+            this.authenticationService.logout();
+          } else if (typeof error.error === 'string') {
+            this.toastr.error(error.error);
+          } else if (error.status === 400) {
+            let msg = '<p>Dados incompletos!</p>';
+            const errors = [];
+
+            Object.keys(error.error).forEach((attributeWithError) => {
+              error.error[attributeWithError].forEach(er => {
+                errors.push(er);
+              });
+            });
+
+            msg += '<ul><li>' + errors.join('</li><li>') + '</li></ul>';
+            this.toastr.error(msg);
+          } else if (error.error?.message) {
+            this.toastr.error('Erro: ' + error.error.message);
+          } else if (error.error?.length > 0) {
+            this.toastr.error(error.error[0]);
+          } else {
+            this.toastr.error('Erro desconhecido! Contate o administrador do sistema.');
+          }
         }
         return throwError(error);
 

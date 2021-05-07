@@ -45,21 +45,17 @@ export class SignInComponent extends BaseResourceFormComponentDirective<UserMode
 
   login(): void {
     if (this.resourceForm.valid) {
-      this.loading = true;
-      const credentials = {email: this.resourceForm.value.email, password: this.resourceForm.value.password};
+      const usernameValue = this.resourceForm.value.username;
+      const passwordValue = this.resourceForm.value.password;
+      const credentials = {username: usernameValue, password: passwordValue};
       this.userService.login(credentials).subscribe(
-        user => this.authenticationService.updateCurrentUser(user, true),
-        error => {
-          if (error.status === 400) {
-            this.error = 'Login e senha não conferem';
-          } else if (error.status === 0) {
-            this.error = 'Problemas de conexão com o servidor. Tente mais tarde';
-          } else {
-            this.error = 'Erro desconhecido, informe ao administrador';
-          }
+        resource => {
+          const user = new UserModel();
+          user.username = usernameValue;
+          user.password = passwordValue;
+          user.token = resource.token;
+          this.authenticationService.updateCurrentUser(user, true);
         },
-        () => {
-        }
       )
         .add(() => {
           this.loading = false;
