@@ -46,8 +46,6 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
         map(this.jsonDataToPagination.bind(this)),
         catchError(this.handleError),
       );
-
-
   }
 
   getByUrlPagination(param?): Observable<PaginationModel> {
@@ -77,57 +75,37 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
 
   getById(id, param: string = ''): Observable<T> {
     this.tokenUpdate();
-    this.loadingService.addRequestToLoading();
     const url = `${LARAVEL_API + this.apiPath}/${id}${param}`;
 
     return this.http.get(url, {headers: this.token}).pipe(
       map(this.jsonDataToResource.bind(this)),
       catchError(this.handleError),
-      finalize(() => {
-        this.loadingService.removeRequestToLoading();
-      }),
     );
   }
 
   getDocument(param): Observable<T> {
     this.tokenUpdate();
-    this.loadingService.addRequestToLoading();
     const url = `${LARAVEL_API + this.apiPath}/${param}`;
 
     return this.http.get(url, {headers: this.token, responseType: 'blob' as 'json'}).pipe(
       catchError(this.handleError),
-      finalize(() => {
-        this.loadingService.removeRequestToLoading();
-      }),
     );
   }
 
   create(resource: T): Observable<T> {
     this.tokenUpdate();
-    this.loadingService.addRequestToLoading();
-    console.log('LARAVEL_API', LARAVEL_API);
-    console.log('this.apiPath', this.apiPath);
-    console.log('resource', resource);
-    console.log('this.token', this.token);
     return this.http.post(`${LARAVEL_API}` + this.apiPath, resource, {headers: this.token}).pipe(
       map(this.jsonDataToResource.bind(this)),
       catchError(this.handleError),
-      finalize(() => {
-        this.loadingService.removeRequestToLoading();
-      }),
     );
   }
 
   update(resource: T): Observable<T> {
     this.tokenUpdate();
-    this.loadingService.addRequestToLoading();
     const url = `${LARAVEL_API + this.apiPath}/${resource.id}`;
     return this.http.put(url, resource, {headers: this.token}).pipe(
       map(this.jsonDataToResource.bind(this)),
       catchError(this.handleError),
-      finalize(() => {
-        this.loadingService.removeRequestToLoading();
-      }),
     );
   }
 
@@ -142,15 +120,11 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
 
   delete(id: number): Observable<any> {
     this.tokenUpdate();
-    this.loadingService.addRequestToLoading();
-    const url = `${LARAVEL_API + this.apiPath}/${id}`;
+    const url = `${LARAVEL_API + this.apiPath}${id}/`;
 
     return this.http.delete(url, {headers: this.token}).pipe(
       map(this.jsonDataToResource.bind(this)),
       catchError(this.handleError),
-      finalize(() => {
-        this.loadingService.removeRequestToLoading();
-      }),
     );
   }
 
@@ -178,28 +152,7 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
   }
 
   protected handleError(error: any): Observable<any> {
-
-    // console.log('error?.message', error.message);
-    // if (error.status === 0) {
-    //   toastr.error('Erro de conexão com o servidor');
-    // } else if (error.status === 401 && error.statusText === 'Unauthorized') {
-    //   toastr.error('Acesso não autorizado (token expirou?) problema a ser resolvido posteriormente. fazer login novamente.');
-    // } else if (error.error?.message) {
-    //     toastr.error('Erro: ' + error.error.message);
-    // } else if (error.error?.length > 0) {
-    //   toastr.error(error.error[0]);
-    // } else {
-    //   toastr.error('Erro desconhecido! Contate o administrador do sistema.');
-    // }
     return throwError(error);
-  }
-
-  protected getFile() {
-    // this.http.get(`${LARAVEL_API}` + this.apiPath + '/printTellerBalance/' + id,{headers: this.token, responseType: 'blob' as 'json'}).subscribe(
-    //   (response: any) =>{
-    //     this.downloadFile(response, filename);
-    //   }
-    // );
   }
 
   public downloadFile(response, filename = null): void {
@@ -224,33 +177,5 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
     }
     return null;
   }
-
-  public onKeySearch(event: any, params: string = '') {
-    clearTimeout(this.timeout);
-    const $this = this;
-    this.timeout = setTimeout(function () {
-      if (event.keyCode !== 13) {
-        $this.onSearchChange(event, params);
-      }
-    }, 1000);
-  }
-
-  onSearchChange(searchValue: string, params: string): void {
-  }
-
-
-  // /**
-  //  * Method is use to download file.
-  //  * @param data - Array Buffer data
-  //  * @param type - type of the document.
-  //  */
-  // downLoadFile(data: any, type: string) {
-  //   let blob = new Blob([data], { type: type});
-  //   let url = window.URL.createObjectURL(blob);
-  //   let pwa = window.open(url);
-  //   if (!pwa || pwa.closed || typeof pwa.closed == 'undefined') {
-  //     alert( 'Please disable your Pop-up blocker and try again.');
-  //   }
-  // }
 
 }
