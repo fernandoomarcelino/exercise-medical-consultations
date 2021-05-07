@@ -12,6 +12,22 @@ import {MatDialogModule} from '@angular/material/dialog';
 
 // FlexLayout
 import {FlexLayoutModule} from '@angular/flex-layout';
+import {MatCardModule} from '@angular/material/card';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatSliderModule} from '@angular/material/slider';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatBadgeModule} from '@angular/material/badge';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import {MatTableModule} from '@angular/material/table';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
   imports: [
@@ -20,8 +36,24 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     RouterModule,
     FormsModule,
 
-    // Material
+    // Material,
+    MatSliderModule,
+    MatSlideToggleModule,
+    MatButtonModule,
+    MatInputModule,
+    MatSelectModule,
+    MatIconModule,
+    MatToolbarModule,
+    MatCardModule,
+    MatDividerModule,
     MatDialogModule,
+    MatChipsModule,
+    MatBadgeModule,
+    DragDropModule,
+    MatTableModule,
+    MatFormFieldModule,
+    MatGridListModule,
+    MatAutocompleteModule,
     // Material
 
     // Flex layout
@@ -42,13 +74,29 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     RouterModule,
     FormsModule,
 
-
+    PageHeaderComponent,
     FormFieldErrorComponent,
     ServerErrorMessagesComponent,
     ModalConfirmComponent,
 
-    // Material
+    // Material,
+    MatSliderModule,
+    MatSlideToggleModule,
+    MatButtonModule,
+    MatInputModule,
+    MatSelectModule,
+    MatIconModule,
+    MatToolbarModule,
+    MatCardModule,
+    MatDividerModule,
     MatDialogModule,
+    MatChipsModule,
+    MatBadgeModule,
+    DragDropModule,
+    MatTableModule,
+    MatFormFieldModule,
+    MatGridListModule,
+    MatAutocompleteModule,
     // Material
 
     // Flex layout

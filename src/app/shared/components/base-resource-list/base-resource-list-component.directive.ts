@@ -29,8 +29,9 @@ export abstract class BaseResourceListComponentDirective<T extends BaseResourceM
     if (this.autoloadResource) {
       this.resourceService.getAll(param).subscribe(
         resources => {
+          console.log('resources', resources)
           this.resources = resources; // .sort((a, b) => b.id - a.id)
-          this.dtTrigger.next();
+          // this.dtTrigger.next();
           this.actionsForSuccess(resources);
         },
         error => this.actionsForError(error)

@@ -33,12 +33,11 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
   }
 
   public tokenUpdate(): any {
-    this.token = new HttpHeaders().append('Authorization', 'Bearer ' + this.getToken());
+    this.token = new HttpHeaders().append('Authorization', 'Token ' + this.getToken());
   }
 
   getPaginations(param?): Observable<PaginationModel> {
     this.tokenUpdate();
-    this.loadingService.addRequestToLoading();
     if (!param) {
       param = '';
     }
@@ -46,9 +45,6 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
       .pipe(
         map(this.jsonDataToPagination.bind(this)),
         catchError(this.handleError),
-        finalize(() => {
-          this.loadingService.removeRequestToLoading();
-        }),
       );
 
 
@@ -56,7 +52,6 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
 
   getByUrlPagination(param?): Observable<PaginationModel> {
     this.tokenUpdate();
-    this.loadingService.addRequestToLoading();
     if (!param) {
       param = '';
     }
@@ -65,25 +60,18 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
       .pipe(
         map(this.jsonDataToPagination.bind(this)),
         catchError(this.handleError),
-        finalize(() => {
-          this.loadingService.removeRequestToLoading();
-        }),
       );
   }
 
 
   getAll(param?): Observable<T[]> {
     this.tokenUpdate();
-    this.loadingService.addRequestToLoading();
     if (!param) {
-      param = '';
+      param = {};
     }
-    return this.http.get(`${LARAVEL_API}` + this.apiPath + param, {headers: this.token}).pipe(
+    return this.http.get(`${LARAVEL_API}` + this.apiPath, {headers: this.token, params: param}).pipe(
       map(this.jsonDataToResources.bind(this)),
       catchError(this.handleError),
-      finalize(() => {
-        this.loadingService.removeRequestToLoading();
-      }),
     );
   }
 
@@ -168,8 +156,13 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
 
   // PROTECTED METHODS
 
-  protected jsonDataToResources(jsonData: any[]): T[] {
+  protected jsonDataToResources(jsonData: any): T[] {
     const resources: T[] = [];
+
+    if (jsonData.results) {
+      jsonData = jsonData.results;
+    }
+
     jsonData.forEach(
       element => resources.push(this.jsonDataToResourceFn(element))
     );
