@@ -1,4 +1,5 @@
-<h1 align="center">Angular - The modern web developer's platform.</h1>
+<h1 align="center">
+System for Medical Clinic and Appointment.</h1>
 
 <p align="center">
   <img src="src/assets/img/brand/angular.png" alt="angular-logo" width="120px" height="120px"/>
@@ -8,7 +9,6 @@
   <br>
 </p>
 
-<p align="center">Stationery system: Customers, products, orders</p>
 
 <p align="center">
   <a href="#Objective">Objective</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
@@ -17,7 +17,7 @@
 
 
 ## Objective
-the goal is to solve a challenge. In short, a system that the user can register, login, mark and unmark queries. Below original specification (pt-BR) 
+the goal is to solve a challenge. In short, a system that the user can register, login, mark and unmark consultation. Below original specification (pt-BR) 
 
 #### Fluxo na marcação de consultas
 
@@ -110,6 +110,18 @@ I added to the requirements:
  * Angular Material
  * Font Awesome
  * Font Awesome
+
+## Tests
+* [Registration Cypress Test](https://exercise-medical-consultations.herokuapp.com/assets/cypress/register.ts.mp4)
+
+### Cypress tests
+```bash
+# execute test with interface
+npx cypress open
+
+# execute test in terminal
+npx cypress run
+```
 
 ## Demo
 * [Demo](https://exercise-medical-consultations.herokuapp.com/)
