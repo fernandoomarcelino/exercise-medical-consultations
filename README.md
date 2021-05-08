@@ -112,7 +112,7 @@ I added to the requirements:
  * Font Awesome
 
 ## Tests
-* [Registration Cypress Test](https://exercise-medical-consultations.herokuapp.com/assets/cypress/register.ts.mp4)
+* [Demo Video - Registration Cypress Test](https://exercise-medical-consultations.herokuapp.com/assets/cypress/register.ts.mp4)
 
 ### Cypress tests
 ```bash
