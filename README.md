@@ -33,23 +33,6 @@ the goal is to solve a challenge. In short, a system that the user can register,
 #### Obter token
 Após criar um usuário é preciso implementar login para obter token para utilizar a API
 
-
-
-
-
-#### Requisitos
-
-* Não devem existir dois clientes com o mesmo email.
-* O produto deve possuir foto.
-* Os dados devem ser validados.
-* O sistema deve conter uma série de tipos de produtos já definidos.
-* O pedido deve contemplar N produtos.
-* O cliente pode contemplar N pedidos.
-* Os registros devem conter a funcionalidade de soft deleting.
-* Padronização PSR
-* Nomenclatura de classes, métodos e rotas no padrão americano.
-* Não é necessário utilizar padrão de autenticação (ex. OAuth) para consumir a API
-
 #### Fonte
 - [test](https://github.com/Intmed-Software/desafio/tree/master/frontend)
 
